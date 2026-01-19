@@ -15,7 +15,7 @@ import org.hugo.common.response.ApiResponse;
 
 import java.util.List;
 
-@Path("/api/audit")
+@Path("/audit")
 @Consumes("application/json")
 @Produces("application/json")
 public class AuditResource {

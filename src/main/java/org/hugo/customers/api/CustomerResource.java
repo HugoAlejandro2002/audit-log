@@ -18,7 +18,7 @@ import org.hugo.customers.services.CustomerService;
 
 import java.util.List;
 
-@Path("/api/customers")
+@Path("/customers")
 @Consumes("application/json")
 @Produces("application/json")
 public class CustomerResource {

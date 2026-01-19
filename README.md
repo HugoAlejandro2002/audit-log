@@ -1,78 +1,249 @@
-# transactions
+# Audit Log & Transactions API
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+**Java 17 · Quarkus · REST · JPA/Hibernate · MySQL · Docker · Cloud Run**
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+---
 
-## Running the application in dev mode
+## Overview
 
-You can run your application in dev mode that enables live coding using:
+This project is a **production-ready Java backend service** built with **Quarkus** and **Java 17**, designed to demonstrate enterprise-level backend development practices.
 
-```shell script
+The system exposes a REST API for managing Customers and records **auditable events** for every state-changing operation, providing full traceability, reproducibility, and operational insight — a common requirement in real-world enterprise systems.
+
+It is designed to run locally using Docker Compose and to be deployed in production using **Google Cloud Run**.
+
+---
+
+## Key Features
+
+### RESTful API
+- CRUD operations for Customers
+- Proper HTTP status codes (201, 404, 409, etc.)
+- Consistent API response envelope
+- JSON payloads with Jakarta Validation
+
+### Audit Logging (Enterprise-Grade)
+Every CREATE, UPDATE, and DELETE operation generates an audit record with:
+- Entity type and entity ID
+- Action performed
+- Actor ID (from request headers)
+- Request ID (correlation ID)
+- Timestamp
+- Field-level diffs
+- Before and after snapshots (JSON)
+
+This enables:
+- End-to-end traceability
+- Root cause analysis
+- Compliance-ready audit trails
+- Cross-service log correlation
+
+### Request Traceability
+A global request filter extracts:
+- `X-Request-Id`
+- `X-Actor-Id`
+
+These values are:
+- Stored in a request-scoped context
+- Injected into structured logs (MDC)
+- Persisted in audit records
+- Returned in API responses
+
+This mirrors patterns used in distributed enterprise systems.
+
+### Partial Updates (PATCH-style)
+Updates use a **Patch Applier** pattern:
+- Only provided fields are applied
+- Validation is centralized
+- Changes are tracked deterministically
+- No controller or service spaghetti logic
+
+Equivalent to `Partial<T>` semantics in TypeScript, implemented safely in Java.
+
+### Optimistic Locking
+- Entities use `@Version`
+- Concurrent updates are detected
+- Conflicts return `409 CONFLICT`
+- Suitable for high-concurrency scenarios
+
+### Health Checks
+Built-in health endpoints using Quarkus SmallRye Health:
+- `/health`
+- `/health/live`
+
+These endpoints are Cloud Run–ready and suitable for container orchestration and monitoring.
+
+---
+
+## Technology Stack
+
+- Java 17
+- Quarkus
+- JPA / Hibernate ORM (Panache)
+- MySQL
+- Maven
+- Docker
+- Google Cloud Run
+- Swagger / OpenAPI
+- SmallRye Health
+
+---
+
+## Project Structure (Simplified)
+
+```
+src/main/java
+├── common
+│   ├── errors        # Exception mappers and API errors
+│   ├── logging       # Centralized logging abstraction
+│   ├── patch         # Generic patch / diff utilities
+│   └── request       # RequestContext and filters
+│
+├── customers
+│   ├── api           # REST resources
+│   ├── domain        # JPA entities
+│   ├── dto           # Request / Response DTOs
+│   ├── repositories # Persistence layer
+│   └── services      # Business logic
+│
+├── audit
+│   ├── api
+│   ├── domain
+│   ├── repositories
+│   └── services
+```
+
+---
+
+## Running the Application (Dev Mode)
+
+```bash
 ./mvnw quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+- Live coding enabled
+- Dev UI available at:
+  http://localhost:8080/q/dev
+- Swagger UI:
+  http://localhost:8080/swagger
 
-## Packaging and running the application
+---
 
-The application can be packaged using:
+## Packaging for Production
 
-```shell script
+### JVM Mode (Recommended for Cloud Run)
+
+```bash
 ./mvnw package
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+This produces:
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```
+target/quarkus-app/
+├── lib/
+├── app/
+├── quarkus/
+└── quarkus-run.jar
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+Run locally:
 
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+```bash
+java -jar target/quarkus-app/quarkus-run.jar
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+---
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+## Docker (Production Ready)
+
+The project includes a production-ready Dockerfile:
+
+```
+src/main/docker/Dockerfile.jvm
 ```
 
-You can then execute your native executable with: `./target/transactions-1.0.0-SNAPSHOT-runner`
+Build the image:
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+```bash
+docker build -f src/main/docker/Dockerfile.jvm -t transactions-api .
+```
 
-## Related Guides
+Run the container:
 
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - MySQL ([guide](https://quarkus.io/guides/datasource)): Connect to the MySQL database via JDBC
+```bash
+docker run -p 8080:8080 --env-file .env transactions-api
+```
 
-## Provided Code
+---
 
-### Hibernate ORM
+## Environment Configuration
 
-Create your first JPA entity
+All configuration is injected via environment variables:
 
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
+```env
+DB_USER=root
+DB_PASSWORD=admin123
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=audit_logs
 
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
+HIBERNATE_SCHEMA_STRATEGY=validate
+QUARKUS_PROFILE=prod
+```
 
+This follows **12-factor app principles** and works seamlessly with Cloud Run.
 
-### REST
+---
 
-Easily start your REST Web Services
+## API Documentation
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+Swagger UI is enabled by default:
+
+```
+http://localhost:8080/swagger
+```
+
+---
+
+## Cloud Run Deployment
+
+- Application listens on port `8080`
+- Uses environment variables for configuration
+- Includes health endpoints for container checks
+- JVM mode optimized for fast startup and low memory usage
+
+The application is fully compatible with **Google Cloud Run**.
+
+---
+
+## Alignment with Java Backend Developer Role (Coderoad)
+
+This project demonstrates:
+
+- RESTful API design using JAX-RS
+- Strong JPA / Hibernate usage
+- SQL-friendly schema design and indexing
+- Debugging and traceability using correlation IDs
+- Concurrency handling with optimistic locking
+- Clean, reusable, and maintainable code
+- Dockerized production deployments
+- Cloud-ready configuration and health checks
+
+It reflects real-world backend systems used in enterprise environments.
+
+---
+
+## Summary
+
+This is not a tutorial project.
+
+It is a **production-oriented backend service** designed with:
+- Maintainability
+- Observability
+- Traceability
+- Concurrency safety
+- Cloud deployment in mind
+
+It represents the level of design and implementation expected from a **mid-to-senior Java Backend Developer**.
+

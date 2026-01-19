@@ -1,15 +1,33 @@
-*
+# --- Build outputs ---
+target/
+build/
+out/
 
-!pom.xml
-!mvnw
-!mvnw.cmd
-!.mvn/
-!.mvn/**
+# --- Dependency caches ---
+.mvn/wrapper/maven-wrapper.jar
+**/.gradle/
+**/.m2/
 
-!src/
-!src/**
+# --- IDE / OS ---
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
 
-!target/*-runner
-!target/*-runner.jar
-!target/lib/*
-!target/quarkus-app/**
+# --- Git / CI metadata ---
+.git/
+.github/
+
+# --- Local env / secrets ---
+.env
+.env.*
+!env.sample
+*.key
+*.pem
+
+# --- Docker compose / local scripts ---
+docker-compose*.yml
+*.ps1
+*.sh
+README.md

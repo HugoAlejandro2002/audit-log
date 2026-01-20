@@ -30,7 +30,7 @@ import java.util.List;
 @Path("/customers")
 @Consumes("application/json")
 @Produces("application/json")
-@Tag(name = "Customers", description = "API para gestión de clientes")
+@Tag(name = "Customers", description = "API for customer management")
 public class CustomerResource {
 
     private static final AppLogger LOG = AppLog.get(CustomerResource.class);
@@ -46,13 +46,13 @@ public class CustomerResource {
     @POST
     @Consumes("application/json")
     @Operation(
-            summary = "Crear cliente",
-            description = "Crea un nuevo cliente. Retorna el cliente creado."
+            summary = "Create customer",
+            description = "Creates a new customer. Returns the created customer."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Cliente creado",
+                    description = "Customer created",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -81,7 +81,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "400",
-                    description = "Validación fallida",
+                    description = "Validation failed",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -109,7 +109,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "409",
-                    description = "Email ya existe",
+                    description = "Email already exists",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -133,7 +133,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno",
+                    description = "Internal error",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -183,18 +183,18 @@ public class CustomerResource {
     @POST
     @Consumes("multipart/form-data")
     @Operation(
-            summary = "Crear cliente (multipart)",
-            description = "Crea un nuevo cliente con formulario multipart."
+            summary = "Create customer (multipart)",
+            description = "Creates a new customer using multipart form."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Cliente creado",
+                    description = "Customer created",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             ),
-            @APIResponse(responseCode = "400", description = "Validación fallida", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-            @APIResponse(responseCode = "409", description = "Email ya existe", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-            @APIResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class)))
+            @APIResponse(responseCode = "400", description = "Validation failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+            @APIResponse(responseCode = "409", description = "Email already exists", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+            @APIResponse(responseCode = "500", description = "Internal error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class)))
     })
     public ApiResponse<CustomerResponse> createMultipart(
             @org.jboss.resteasy.reactive.MultipartForm CreateCustomerForm form,
@@ -213,13 +213,13 @@ public class CustomerResource {
 
     @GET
     @Operation(
-            summary = "Listar clientes",
-            description = "Lista clientes paginados, opcionalmente filtrando por activos."
+            summary = "List customers",
+            description = "Lists customers with pagination, optionally filtering by active status."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Listado de clientes",
+                    description = "Customers list",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -250,7 +250,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                 responseCode = "400",
-                description = "Parámetros inválidos",
+                description = "Invalid parameters",
                 content = @Content(
                         mediaType = "application/json",
                         schema = @Schema(implementation = ApiResponse.class),
@@ -277,7 +277,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno",
+                    description = "Internal error",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
@@ -310,13 +310,13 @@ public class CustomerResource {
     @GET
     @Path("/{id}")
     @Operation(
-            summary = "Obtener cliente por ID",
-            description = "Obtiene el cliente por su ID."
+            summary = "Get customer by ID",
+            description = "Gets the customer by its ID."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Cliente encontrado",
+                    description = "Customer found",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -345,7 +345,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "404",
-                    description = "Cliente no encontrado",
+                    description = "Customer not found",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -369,7 +369,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno",
+                    description = "Internal error",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             )
     })
@@ -400,13 +400,13 @@ public class CustomerResource {
     @Path("/{id}")
     @Consumes("application/json")
     @Operation(
-            summary = "Actualizar cliente",
-            description = "Actualiza campos del cliente. Puede retornar 409 si el email ya existe."
+            summary = "Update customer",
+            description = "Updates customer fields. May return 409 if the email already exists."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Cliente actualizado",
+                    description = "Customer updated",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -435,17 +435,17 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "400",
-                    description = "Validación fallida",
+                    description = "Validation failed",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             ),
             @APIResponse(
                     responseCode = "404",
-                    description = "Cliente no encontrado",
+                    description = "Customer not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             ),
             @APIResponse(
                     responseCode = "409",
-                    description = "Email ya existe",
+                    description = "Email already exists",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -469,7 +469,7 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno",
+                    description = "Internal error",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             )
     })
@@ -503,15 +503,15 @@ public class CustomerResource {
     @Path("/{id}")
     @Consumes("multipart/form-data")
     @Operation(
-            summary = "Actualizar cliente (multipart)",
-            description = "Actualiza campos del cliente usando formulario multipart."
+            summary = "Update customer (multipart)",
+            description = "Updates customer fields using multipart form."
     )
     @APIResponses({
-            @APIResponse(responseCode = "200", description = "Cliente actualizado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-            @APIResponse(responseCode = "400", description = "Validación fallida", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-            @APIResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-            @APIResponse(responseCode = "409", description = "Email ya existe", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-            @APIResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class)))
+            @APIResponse(responseCode = "200", description = "Customer updated", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+            @APIResponse(responseCode = "400", description = "Validation failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+            @APIResponse(responseCode = "404", description = "Customer not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+            @APIResponse(responseCode = "409", description = "Email already exists", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+            @APIResponse(responseCode = "500", description = "Internal error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class)))
     })
     public ApiResponse<CustomerResponse> updateMultipart(
             @Valid @BeanParam CustomerIdParam p,
@@ -536,13 +536,13 @@ public class CustomerResource {
     @DELETE
     @Path("/{id}")
     @Operation(
-            summary = "Eliminar cliente",
-            description = "Elimina el cliente por ID. Respuesta exitosa sin cuerpo de datos."
+            summary = "Delete customer",
+            description = "Deletes the customer by ID. Successful response without data body."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Eliminado correctamente",
+                    description = "Deleted successfully",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -563,12 +563,12 @@ public class CustomerResource {
             ),
             @APIResponse(
                     responseCode = "404",
-                    description = "Cliente no encontrado",
+                    description = "Customer not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno",
+                    description = "Internal error",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
             )
     })

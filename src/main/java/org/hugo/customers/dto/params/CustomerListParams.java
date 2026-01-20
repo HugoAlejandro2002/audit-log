@@ -13,7 +13,7 @@ public class CustomerListParams {
     @QueryParam("page")
     @DefaultValue("0")
     @Min(value = 0, message = "page must be >= 0")
-    @Parameter(name = "page", in = ParameterIn.QUERY, description = "Número de página (0-index)", example = "0")
+    @Parameter(name = "page", in = ParameterIn.QUERY, description = "Page number (0-index)", example = "0")
     @Schema(minimum = "0")
     public int page;
 
@@ -21,12 +21,12 @@ public class CustomerListParams {
     @DefaultValue("20")
     @Min(value = 1, message = "size must be between 1 and 100")
     @Max(value = 100, message = "size must be between 1 and 100")
-    @Parameter(name = "size", in = ParameterIn.QUERY, description = "Tamaño de página (1-100)", example = "20")
+    @Parameter(name = "size", in = ParameterIn.QUERY, description = "Page size (1-100)", example = "20")
     @Schema(minimum = "1", maximum = "100")
     public int size;
 
     @QueryParam("activeOnly")
     @DefaultValue("true")
-    @Parameter(name = "activeOnly", in = ParameterIn.QUERY, description = "Filtrar solo clientes activos", example = "true")
+    @Parameter(name = "activeOnly", in = ParameterIn.QUERY, description = "Filter only active customers", example = "true")
     public boolean activeOnly;
 }

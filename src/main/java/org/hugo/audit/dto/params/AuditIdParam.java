@@ -10,7 +10,7 @@ public class AuditIdParam {
 
     @PathParam("id")
     @Min(value = 1, message = "id must be >= 1")
-    @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "ID del evento de auditoría", example = "123")
+    @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Audit event ID", example = "123")
     @Schema(minimum = "1")
     public long id;
 }

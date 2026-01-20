@@ -9,7 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 public class CustomerIdParam {
     @PathParam("id")
     @Min(value = 1, message = "id must be >= 1")
-    @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "ID del cliente", example = "42")
+    @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Customer ID", example = "42")
     @Schema(minimum = "1")
     public long id;
 }

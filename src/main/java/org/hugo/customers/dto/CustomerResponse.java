@@ -5,21 +5,21 @@ import java.time.Instant;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hugo.customers.domain.Customer;
 
-@Schema(name = "Customer", description = "Representación pública del cliente")
+@Schema(name = "Customer", description = "Public representation of the customer")
 public record CustomerResponse(
-        @Schema(description = "ID del cliente", example = "42")
+        @Schema(description = "Customer ID", example = "42")
         long id,
-        @Schema(description = "Nombre del cliente", example = "Ada Lovelace")
+        @Schema(description = "Customer name", example = "Ada Lovelace")
         String name,
-        @Schema(description = "Email del cliente", example = "ada@example.com")
+        @Schema(description = "Customer email", example = "ada@example.com")
         String email,
-        @Schema(description = "Indica si el cliente está activo", example = "true")
+        @Schema(description = "Indicates whether the customer is active", example = "true")
         boolean active,
-        @Schema(description = "Fecha de creación (UTC)", example = "2025-01-01T10:00:00Z")
+        @Schema(description = "Creation date (UTC)", example = "2025-01-01T10:00:00Z")
         Instant createdAt,
-        @Schema(description = "Fecha de última actualización (UTC)", example = "2025-01-05T11:00:00Z")
+        @Schema(description = "Last update date (UTC)", example = "2025-01-05T11:00:00Z")
         Instant updatedAt,
-        @Schema(description = "Versión para control optimista", example = "3")
+        @Schema(description = "Version for optimistic control", example = "3")
         long version
 ) {
     public static CustomerResponse from(Customer c) {

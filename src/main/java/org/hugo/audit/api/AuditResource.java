@@ -25,7 +25,7 @@ import java.util.List;
 @Path("/audit")
 @Consumes("application/json")
 @Produces("application/json")
-@Tag(name = "Audit", description = "API para consultar eventos de auditoría")
+@Tag(name = "Audit", description = "API to query audit events")
 public class AuditResource {
 
     private static final AppLogger LOG = AppLog.get(AuditResource.class);
@@ -38,13 +38,13 @@ public class AuditResource {
 
     @GET
     @Operation(
-            summary = "Listar eventos de auditoría",
-            description = "Lista eventos filtrando por tipo/ID de entidad, actor, request y rango de fechas. Ordenados por fecha descendente."
+            summary = "List audit events",
+            description = "Lists events filtered by entity type/ID, actor, request, and date range. Sorted by date descending."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Listado de eventos de auditoría",
+                    description = "Audit events list",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -77,7 +77,7 @@ public class AuditResource {
             ),
             @APIResponse(
                     responseCode = "400",
-                    description = "Parámetros inválidos o rango de fechas incorrecto",
+                    description = "Invalid parameters or incorrect date range",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -104,7 +104,7 @@ public class AuditResource {
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno del servidor",
+                    description = "Internal server error",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -143,13 +143,13 @@ public class AuditResource {
     @GET
     @Path("/{id}")
     @Operation(
-            summary = "Obtener evento de auditoría por ID",
-            description = "Devuelve el evento de auditoría si existe. Si no existe, la respuesta es exitosa con data=null."
+            summary = "Get audit event by ID",
+            description = "Returns the audit event if it exists. If not found, the response is successful with data=null."
     )
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
-                    description = "Evento encontrado o data=null si no existe",
+                    description = "Event found or data=null if not found",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -180,7 +180,7 @@ public class AuditResource {
             ),
             @APIResponse(
                     responseCode = "400",
-                    description = "ID inválido",
+                    description = "Invalid ID",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -207,7 +207,7 @@ public class AuditResource {
             ),
             @APIResponse(
                     responseCode = "500",
-                    description = "Error interno del servidor",
+                    description = "Internal server error",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),

@@ -10,15 +10,15 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
         info = @Info(
                 title = "Audit Log API",
                 version = "1.0.0",
-                description = "API para consulta de eventos de auditoría y gestión de clientes. Todas las respuestas están envueltas en el objeto ApiResponse.",
+                description = "API for querying audit events and managing customers. All responses are wrapped in the ApiResponse object.",
                 license = @License(name = "MIT")
         ),
         servers = {
-                @Server(url = "/api/v1", description = "Base path de la API")
+                @Server(url = "/api/v1", description = "API base path")
         },
         tags = {
-                @Tag(name = "Audit", description = "Operaciones de auditoría"),
-                @Tag(name = "Customers", description = "Operaciones sobre clientes")
+                @Tag(name = "Audit", description = "Audit operations"),
+                @Tag(name = "Customers", description = "Customer operations")
         }
 )
 public class OpenApiConfig {
